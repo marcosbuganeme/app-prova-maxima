@@ -2,11 +2,11 @@ import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 
-import { Produto } from '../shared/produto.model'
-import { ProdutoService } from '../shared/produto.service'
-
 import { switchMap } from 'rxjs/operators'
+
 import toastr from 'toastr'
+
+import { Produto, ProdutoService } from '../shared'
 
 @Component({
   selector: 'app-produto-form',
@@ -28,6 +28,7 @@ export class ProdutoFormComponent implements OnInit, AfterContentChecked {
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+
     this.setRotaCorrente()
     this.construirValidadoresProduto()
     this.carregarProduto()
@@ -36,6 +37,17 @@ export class ProdutoFormComponent implements OnInit, AfterContentChecked {
   ngAfterContentChecked() {
     
     this.setTituloPagina()
+  }
+
+
+  submitForm() {
+
+    this.desabilitarBotaoSalvar = true;
+
+    if(this.rotaCorrente == "new")
+      this.criarProduto();
+    else
+      this.alterarProduto();
   }
 
   private setRotaCorrente(): void {
@@ -79,7 +91,7 @@ export class ProdutoFormComponent implements OnInit, AfterContentChecked {
     } else {
 
       const descricaoProduto = this.produto.descricao || ''
-      this.tituloPagina = 'Editando de produto: ' + descricaoProduto
+      this.tituloPagina = 'Editando produto: ' + descricaoProduto
     }
   }
 
@@ -92,19 +104,27 @@ export class ProdutoFormComponent implements OnInit, AfterContentChecked {
                        error => this.acoesErro(error))
   }
 
-  prvate alterarProduto(): void {
+  private alterarProduto(): void {
 
+    const produto: Produto = Object.assign(new Produto(), this.produtoFormulario.value);
+
+    this.produtoService
+            .editar(produto)
+            .subscribe(produto => this.acoesSucesso(produto),
+                       error => this.acoesErro(error))
   }
 
   private acoesSucesso(produto: Produto): void {
-    toastr.success('Solicitação processada com sucesso')
+
+    toastr.success('Solicitação processada com sucesso!')
 
     this.router
           .navigateByUrl('produtos', { skipLocationChange: true})
           .then(() => this.router.navigate(['produtos', produto.id, 'edit']))
   }
 
-  priate acoesErro(): void {
+  private acoesErro(error: any): void {
+
     toastr.error('Ocorreu um erro ao processar a sua solicitação')
 
     this.desabilitarBotaoSalvar = false
