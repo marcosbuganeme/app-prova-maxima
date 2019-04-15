@@ -1,3 +1,45 @@
-<p>
-  produto-form works!
-</p>
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+    <li class="breadcrumb-item" routerLink="/produtos">Produtos</li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md">
+    <h1 class="h2 border-left pl-2">{{ tituloPagina }}</h1>
+  </div>
+</div>
+
+<form [formGroup]="produtoFormulario" (submit)="criarProduto()">
+  <div class="card">
+    <div class="card-header">
+      Informações sobre o produto
+    </div>
+
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="descricao">Descrição</label>
+          <input type="text" class="form-control" id="descricao" formControlName="descricao">
+
+          <div class="text-danger" *ngIf="produtoFormulario.get('descricao').invalid && produtoFormulario.get('descricao').touched">
+            <div *ngIf="produtoFormulario.get('descricao').errors.required">Dado obrigatório</div>
+            <div *ngIf="produtoFormulario.get('descricao').errors.minLength">Deve ter no mínimo 5 caracteres</div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-8">
+          <label for="preco">Preço</label>
+          <input type="text" class="form-control" id="preco" formControlName="preco">
+
+          <div class="text-danger" *ngIf="produtoFormulario.get('preco').required && produtoFormulario.get('preco').touched"">
+            <div *ngIf="produtoFormulario.get('preco').errors.required">Dado obrigatório</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <button [disabled]=="desabilitarBotaoSalvar || produtoFormulario.invalid" type="submit" class="btn btn-lg btn-primary float-right mt-3">Salvar</button>
+</form>
