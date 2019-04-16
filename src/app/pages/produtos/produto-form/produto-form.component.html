@@ -1,32 +1,13 @@
-<nav class="mb-5">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a routerLink="/">Home</a>
-    </li>
+<app-breadcrumb 
+  [itens]="[{text: 'Produtos', link: '/produtos'}, {text: tituloPagina}]">
+</app-breadcrumb>
 
-    <li class="breadcrumb-item">
-      <a routerLink="/produtos">Produtos</a>
-    </li>
-
-    <li class="breadcrumb-item active">
-      {{ tituloPagina }}
-    </li>
-  </ol>
-</nav>
-
-<div class="row mb-4">
-  <div class="col-md">
-    <h1 class="h2 border-left pl-2">
-      {{ tituloPagina }}
-    </h1>
-  </div>
-
-  <div class="col-md">
-    <a routerLink="/produtos" class="btn btn-light float-right">
-      << Voltar
-    </a>
-  </div>
-</div>
+<app-page-header 
+    [titulo-pagina]="tituloPagina" 
+    button-text="<< Voltar"
+    button-link="/produtos" 
+    button-class="btn-light">
+</app-page-header>
 
 <form [formGroup]="produtoFormulario" (submit)="submitForm()">
   <div class="card">
@@ -40,19 +21,16 @@
           <label for="descricao">Descrição</label>
           <input type="text" class="form-control" id="descricao" formControlName="descricao">
 
-          <div class="text-danger" *ngIf="produtoFormulario.get('descricao').invalid && produtoFormulario.get('descricao').touched">
-            <div *ngIf="produtoFormulario.get('descricao').errors.required">Dado obrigatório</div>
-            <div *ngIf="produtoFormulario.get('descricao').errors.minlength">Deve ter no mínimo 5 caracteres</div>
-          </div>
+          <app-erro-campo-formulario [form-control]="produtoFormulario.get('descricao')">
+          </app-erro-campo-formulario>
         </div>
 
         <div class="form-group col-md-8">
           <label for="preco">Preço</label>
           <input type="text" class="form-control" id="preco" formControlName="preco">
 
-          <div class="text-danger" *ngIf="produtoFormulario.get('preco').required && produtoFormulario.get('preco').touched">
-            <div *ngIf="produtoFormulario.get('preco').errors.required">Dado obrigatório</div>
-          </div>
+          <app-erro-campo-formulario [form-control]="produtoFormulario.get('preco')">
+          </app-erro-campo-formulario>
         </div>
       </div>
     </div>

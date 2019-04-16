@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterContentChecked } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 
 import { switchMap } from 'rxjs/operators'
@@ -62,8 +62,8 @@ export class ProdutoFormComponent implements OnInit, AfterContentChecked {
 
     this.produtoFormulario = this.formBuilder.group({
       id: [null],
-      descricao: [null, [Validators.required, Validators.minLength(2)]],
-      preco: [null]
+      descricao: [null, [Validators.required, Validators.minLength(5)]],
+      preco: [null, [Validators.required]]
     })
   }
 
