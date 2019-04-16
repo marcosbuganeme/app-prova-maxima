@@ -5,11 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { ProdutosRoutingModule } from './produtos-routing.module';
 import { ProdutoListComponent } from './produto-list/produto-list.component';
 import { ProdutoFormComponent } from './produto-form/produto-form.component';
+import { UltimoCadastradoComponent } from './ultimo-cadastrado/ultimo-cadastrado.component';
 
 @NgModule({
   declarations: [
     ProdutoListComponent, 
-    ProdutoFormComponent
+    ProdutoFormComponent, UltimoCadastradoComponent
   ],
   imports: [
     CommonModule,

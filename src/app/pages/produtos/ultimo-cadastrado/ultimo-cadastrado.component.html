@@ -1,0 +1,47 @@
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+
+    <li class="breadcrumb-item">
+      <a routerLink="/produtos">Produtos</a>
+    </li>
+
+    <li class="breadcrumb-item active">
+      {{ tituloPagina }}
+    </li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md">
+    <h1 class="h2 border-left pl-2">
+      {{ tituloPagina }}
+    </h1>
+  </div>
+
+  <div class="col-md">
+    <a routerLink="/produtos" class="btn btn-light float-right">
+      << Voltar
+    </a>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    Informações sobre o produto
+  </div>
+
+  <div class="card-body">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="descricao">Descrição: {{ produtoCadastrado.descricao }} </label>
+      </div>
+
+      <div class="form-group col-md-8">
+        <label for="preco">Preço: {{ produtoCadastrado.preco }}</label>
+      </div>
+    </div>
+  </div>
+</div>

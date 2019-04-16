@@ -14,6 +14,15 @@ export class ProdutoService {
 
   constructor(private http: HttpClient) { }
 
+  buscarPeloUltimoProdutoCadastrado(): Observable<Produto> {
+    const url = `${this.apiPath}/ultimo/cadastrado`
+
+    return this.http
+                .get(url)
+                .pipe(map(this.converterJsonParaProduto),
+                      catchError(this.manipulaErro))
+  }
+
   buscarTodosProdutos(): Observable<Produto[]> {
 
     return this.http
